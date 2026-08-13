@@ -110,7 +110,7 @@ install_XrayR() {
 
     if  [ $# == 0 ] ;then
         # 获取最新的 release
-        last_version=$(curl -Ls "https://api.github.com/repos/leaderen/wyx2685-XrayR/releases" | grep '"tag_name":' | head -1 | sed -E 's/.*"([^"]+)".*/\1/')
+        last_version=$(curl -Ls "https://api.github.com/repos/sakz/wyx2685-XrayR/releases" | grep '"tag_name":' | head -1 | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$last_version" ]]; then
             echo -e "${red}检测 XrayR 版本失败，可能是超出 Github API 限制，请稍后再试，或手动指定 XrayR 版本安装${plain}"
             echo -e "${yellow}提示：可以手动指定版本安装，例如：bash install.sh v0.9.2${plain}"
@@ -119,12 +119,12 @@ install_XrayR() {
         echo -e "检测到 XrayR 最新版本：${last_version}，开始安装"
         
         # 尝试下载最新版本
-        wget -q -N --no-check-certificate -O /usr/local/XrayR/XrayR-linux.zip https://github.com/leaderen/wyx2685-XrayR/releases/download/${last_version}/XrayR-linux-${arch}.zip
+        wget -q -N --no-check-certificate -O /usr/local/XrayR/XrayR-linux.zip https://github.com/sakz/wyx2685-XrayR/releases/download/${last_version}/XrayR-linux-${arch}.zip
         if [[ $? -ne 0 ]]; then
             echo -e "${yellow}${last_version} 下载失败，尝试 v0.9.2...${plain}"
             # 如果最新版本下载失败，尝试 v0.9.2
             last_version="v0.9.2"
-            wget -q -N --no-check-certificate -O /usr/local/XrayR/XrayR-linux.zip https://github.com/leaderen/wyx2685-XrayR/releases/download/${last_version}/XrayR-linux-${arch}.zip
+            wget -q -N --no-check-certificate -O /usr/local/XrayR/XrayR-linux.zip https://github.com/sakz/wyx2685-XrayR/releases/download/${last_version}/XrayR-linux-${arch}.zip
             if [[ $? -ne 0 ]]; then
                 echo -e "${red}下载 XrayR 失败，请确保你的服务器能够下载 Github 的文件${plain}"
                 exit 1
@@ -136,7 +136,7 @@ install_XrayR() {
 	else
 	    last_version="v"$1
 	fi
-        url="https://github.com/leaderen/wyx2685-XrayR/releases/download/${last_version}/XrayR-linux-${arch}.zip"
+        url="https://github.com/sakz/wyx2685-XrayR/releases/download/${last_version}/XrayR-linux-${arch}.zip"
         echo -e "开始安装 XrayR ${last_version}"
         wget -q -N --no-check-certificate -O /usr/local/XrayR/XrayR-linux.zip ${url}
         if [[ $? -ne 0 ]]; then
@@ -150,7 +150,7 @@ install_XrayR() {
     chmod +x XrayR
     mkdir /etc/XrayR/ -p
     rm /etc/systemd/system/XrayR.service -f
-    file="https://github.com/leaderen/wyx2685-XrayR-scripts/raw/master/XrayR.service"
+    file="https://raw.githubusercontent.com/sakz/wyx2685-XrayR-scripts/master/XrayR.service"
     wget -q -N --no-check-certificate -O /etc/systemd/system/XrayR.service ${file}
     systemctl daemon-reload
     systemctl stop XrayR
@@ -191,7 +191,7 @@ install_XrayR() {
     if [[ ! -f /etc/XrayR/rulelist ]]; then
         cp rulelist /etc/XrayR/
     fi
-    curl -o /usr/bin/XrayR -Ls https://raw.githubusercontent.com/leaderen/wyx2685-XrayR-scripts/master/XrayR.sh
+    curl -o /usr/bin/XrayR -Ls https://raw.githubusercontent.com/sakz/wyx2685-XrayR-scripts/master/XrayR.sh
     chmod +x /usr/bin/XrayR
     ln -s /usr/bin/XrayR /usr/bin/xrayr # 小写兼容
     chmod +x /usr/bin/xrayr
